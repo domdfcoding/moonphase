@@ -38,7 +38,7 @@ try:
 	import datetime
 except ImportError:
 	# 3rd party
-	import adafruit_datetime as datetime
+	import adafruit_datetime as datetime  # type: ignore[import-not-found, no-redef]
 
 TYPE_CHECKING = False
 
@@ -65,7 +65,7 @@ try:
 	# stdlib
 	from typing import NamedTuple
 
-	class MoonData(NamedTuple):
+	class MoonData(NamedTuple):  # noqa: D101
 		#: The moon phase angle as an int (0-360)
 		angle: int
 
@@ -76,7 +76,7 @@ except ImportError:
 	# stdlib
 	from collections import namedtuple
 
-	MoonData = namedtuple("MoonData", ("angle", "percentLit"))
+	MoonData = namedtuple("MoonData", ("angle", "percentLit"))  # type: ignore[no-redef]
 
 
 def get_phase(date: datetime.datetime) -> MoonData:
@@ -92,7 +92,7 @@ def get_phase(date: datetime.datetime) -> MoonData:
 	return _getPhase(date.year, date.month, date.day, _fhour(date))
 
 
-def _fhour(t: datetime.datetime) -> float:
+def _fhour(t: datetime.datetime) -> float:  # noqa: PRM002
 	"""
 	Returns the time component of the given datetime as a float hour.
 	"""
@@ -100,11 +100,9 @@ def _fhour(t: datetime.datetime) -> float:
 	return t.hour + _map_time((t.minute * 60) + t.second, 0, 3600, 0.0, 1.0)
 
 
-def _getPhase(year: int, month: int, day: int, hour: float) -> MoonData:
+def _getPhase(year: int, month: int, day: int, hour: float) -> MoonData:  # noqa: PRM002
 	"""
 	Calculates the phase of the moon at the given epoch.
-
-	:param date:
 
 	:returns: The moon phase angle as an int (0-360) and
 		the moon percentage that is lit as a real number (0-1).
