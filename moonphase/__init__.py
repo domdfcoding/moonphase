@@ -31,9 +31,22 @@ Python port of `moonPhase-esp32`_ 1.0.3 by Cellie.
 #
 
 # stdlib
-import datetime
 import math
-from typing import NamedTuple, TypeVar
+
+try:
+	# stdlib
+	import datetime
+except ImportError:
+	# 3rd party
+	import adafruit_datetime as datetime
+
+TYPE_CHECKING = False
+
+if TYPE_CHECKING:
+	# stdlib
+	from typing import TypeVar
+	T = TypeVar('T', bound=float)
+	T2 = TypeVar("T2", bound=float)
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2026 Dominic Davis-Foster"
@@ -43,20 +56,27 @@ __email__: str = "dominic@davis-foster.co.uk"
 
 __all__ = ["MoonData", "get_phase"]
 
-T = TypeVar('T', bound=float)
-T2 = TypeVar("T2", bound=float)
 
-
-def _map_time(val: T2, in_min: T2, in_max: T2, out_min: T, out_max: T):
+def _map_time(val: "T2", in_min: "T2", in_max: "T2", out_min: 'T', out_max: 'T') -> float:
 	return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 
-class MoonData(NamedTuple):
-	#: The moon phase angle as an int (0-360)
-	angle: int
+try:
+	# stdlib
+	from typing import NamedTuple
 
-	#: The moon percentage that is lit as a real number (0-1)
-	percentLit: float
+	class MoonData(NamedTuple):
+		#: The moon phase angle as an int (0-360)
+		angle: int
+
+		#: The moon percentage that is lit as a real number (0-1)
+		percentLit: float
+
+except ImportError:
+	# stdlib
+	from collections import namedtuple
+
+	MoonData = namedtuple("MoonData", ("angle", "percentLit"))
 
 
 def get_phase(date: datetime.datetime) -> MoonData:
