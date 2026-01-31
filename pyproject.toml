@@ -7,7 +7,7 @@ name = "moonphase"
 version = "1.0.3"
 description = "Python library to calculate the moon phase angle and illuminated fraction for a given time."
 readme = "README.rst"
-keywords = []
+keywords = [ "circuitpython", "moon",]
 dynamic = [ "requires-python", "classifiers", "dependencies",]
 
 [project.license]
