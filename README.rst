@@ -8,6 +8,10 @@ moonphase
 
 .. end short_desc
 
+Python port of `moonPhase-esp32`_ 1.0.3 by Cellie.
+
+.. _moonPhase-esp32: https://github.com/CelliesProjects/moonPhase-esp32
+
 
 .. start shields
 
